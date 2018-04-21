@@ -1,52 +1,40 @@
-"""
-Module to monitor the processes
-"""
-from api_config_reader import ApiConfigReader
-import requests
+# from subprocess import check_output
+import subprocess
+import psutil
 
 class ProcessMonitor(object):
 
-    def __init__(self):
-        apiconfig = ApiConfigReader('../config/config.json')
-        endpoints = apiconfig.get_default_list_apis()
-        self._endpoints_status = []
-        for endpoint in endpoints:
-            response_output = make_api_call(endpoint)
-            self._endpoints_status.append(response_output)
+    def __init__(self, process_name):
+        self._process_name = process_name
+        self._process_id = get_pid(process_name)
+        p = psutil.Process(self._process_id)
+        self._cpu_times = p.cpu_times()
+        self._cpu_percent = p.cpu_percent()
+        self._memory_info = p.memory_info()
+        self._memory_full_info = p.memory_full_info()
+        self._memory_percent = p.memory_percent()
+        # self._io_counters = p.io_counters()
+        self._open_files = p.open_files()
+        self._connections = p.connections()
 
-    @property
-    def endpoints_status(self):
-        'Return the Endpoint statuses'
-        return self._endpoints_status
+    def get_process_info(self):
+        process_info = {}
+        print(self._cpu_times[0])
+        print(self._cpu_percent)
+        print(self._memory_info)
+        print(self._memory_full_info )
+        print(self._memory_percent)
+        print(self._open_files)
+        print(self._connections)
 
-    @endpoints_status.setter
-    def endpoints_status(self, value):
-        self._endpoints_status = value
 
-    def get_endpoint_statuses(self):
-        'Get the list of statuses'
-        return self._endpoints_status
 
-def make_api_call(endpoint):
-    response_output = {}
-    if endpoint['method'] == 'GET':
-        r = requests.get(endpoint['endpoint'])
-        if r.status_code == 200:
-            response_output['endpoint'] = endpoint['endpoint']
-            response_output['response_time'] = r.elapsed.total_seconds()
-            response_output['status'] = True
-        else:
-            response_output['endpoint'] = endpoint['endpoint']
-            response_output['response_time'] = r.elapsed.total_seconds()
-            response_output['status'] = False
-    else:
-        # TODO: Implement for other HTTP methods
-        pass
-    return response_output
+def get_pid(name):
+    for proc in psutil.process_iter(attrs=['pid', 'name']):
+        if proc.info['name'] == name:
+            return proc.info['pid']
+
 
 if __name__ == "__main__":
-    monitor = ProcessMonitor()
-    statuses = monitor.get_endpoint_statuses()
-    print(statuses[0]['endpoint'])
-    print(statuses[0]['response_time'])
-    print(statuses[0]['status'])
+    monitor = ProcessMonitor('node')
+    monitor.get_process_info()
