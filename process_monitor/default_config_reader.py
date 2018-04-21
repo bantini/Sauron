@@ -9,8 +9,8 @@ class DefaultConfigReader(object):
         self._endpoint_list = []
         with open(file_path, 'r') as reader:
             api_config = json.load(reader)
-            for name in api_config:
-                self._endpoint_list.append(api_config[name])
+            for endpoint in api_config:
+                self._endpoint_list.append(endpoint)
 
 
     @property
