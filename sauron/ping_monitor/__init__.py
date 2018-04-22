@@ -29,19 +29,24 @@ class PingMonitor(object):
 
 def make_api_call(endpoint):
     response_output = {}
-    if endpoint['method'] == 'GET':
-        r = requests.get(endpoint['endpoint'])
-        if r.status_code == 200:
-            response_output['endpoint'] = endpoint['endpoint']
-            response_output['response_time'] = r.elapsed.total_seconds()
-            response_output['status'] = True
+    try:
+        if endpoint['method'] == 'GET':
+            r = requests.get(endpoint['endpoint'])
+            if r.status_code == 200:
+                response_output['endpoint'] = endpoint['endpoint']
+                response_output['response_time'] = r.elapsed.total_seconds()
+                response_output['status'] = True
+            else:
+                response_output['endpoint'] = endpoint['endpoint']
+                response_output['response_time'] = r.elapsed.total_seconds()
+                response_output['status'] = False
         else:
-            response_output['endpoint'] = endpoint['endpoint']
-            response_output['response_time'] = r.elapsed.total_seconds()
-            response_output['status'] = False
-    else:
-        # TODO: Implement for other HTTP methods
-        pass
+            # TODO: Implement for other HTTP methods
+            pass
+    except requests.exceptions.ConnectionError:
+        response_output['endpoint'] = endpoint['endpoint']
+        response_output['response_time'] = 99999
+        response_output['status'] = False
     return response_output
 
 if __name__ == "__main__":

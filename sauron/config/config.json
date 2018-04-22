@@ -1,1 +1,2 @@
-[{"endpoint":"http://www.vahanalytics.com/", "method": "GET"}]
+[{"endpoint":"http://www.vahanalytics.com/", "method": "GET"},
+{"endpoint":"http://www.nilayan.com", "method": "GET"}]

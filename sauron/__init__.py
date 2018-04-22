@@ -5,6 +5,7 @@ from sauron.process_monitor import ProcessMonitor
 
 from sauron.stat_aggregator import machine_stat_aggregator, ping_stat_aggregator, process_stat_aggregator
 from sauron.machine_warning_generator import *
+from sauron.ping_warning_generator import *
 
 class Sauron(object):
 
@@ -50,6 +51,15 @@ class Sauron(object):
             print("Warning. Over 80 percent of disk used")
         else:
             print("Disk health is fine")
+
+    def get_ping_health(self, config_path=None):
+        if config_path:
+            ping_monitor = PingMonitor(config_path)
+        else:
+            ping_monitor = PingMonitor('/Users/nilayan/Documents/Sauron/sauron/config/config.json')
+        ping_stats = ping_monitor.get_ping_info()
+        api_warning_generator(ping_stats)
+
 
 if __name__ == "__main__":
     sauron = Sauron()
