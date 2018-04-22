@@ -26,6 +26,7 @@ class Sauron(object):
         return server_stats
 
     def get_cpu_health(self):
+        # Print warnings and errors on the status of the CPU
         mc_monitor = MachineMonitor()
         machine_stats = mc_monitor.get_machine_info()
         cpu_warning = cpu_warning_generator(machine_stats['cpu_times'])
@@ -35,6 +36,7 @@ class Sauron(object):
             print("CPU health is fine")
 
     def get_memory_health(self):
+        # Print warnings and errors on the status of the RAM
         mc_monitor = MachineMonitor()
         machine_stats = mc_monitor.get_machine_info()
         memory_warning = memory_warning_generator(machine_stats['virtual_memory'])
@@ -44,6 +46,7 @@ class Sauron(object):
             print("Memory health is fine")
 
     def get_disk_health(self):
+        # Print warnings and errors on the status of the disk
         mc_monitor = MachineMonitor()
         machine_stats = mc_monitor.get_machine_info()
         disk_warning = disk_warning_generator(machine_stats['disk_usage']['/'])
@@ -53,12 +56,16 @@ class Sauron(object):
             print("Disk health is fine")
 
     def get_ping_health(self, config_path=None):
-        if config_path:
-            ping_monitor = PingMonitor(config_path)
-        else:
-            ping_monitor = PingMonitor('/Users/nilayan/Documents/Sauron/sauron/config/config.json')
-        ping_stats = ping_monitor.get_ping_info()
-        api_warning_generator(ping_stats)
+        # Print warnings and errors on the status of the endpoints
+        try:
+            if config_path:
+                ping_monitor = PingMonitor(config_path)
+            else:
+                ping_monitor = PingMonitor('Default/path/to/config')
+            ping_stats = ping_monitor.get_ping_info()
+            api_warning_generator(ping_stats)
+        except FileNotFoundError:
+            print("Error! Please provide correct file path to config file")
 
 
 if __name__ == "__main__":
