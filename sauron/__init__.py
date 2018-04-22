@@ -36,23 +36,29 @@ class Sauron(object):
         else:
             print("CPU health is fine")
 
-    def get_memory_health(self):
+    def get_memory_health(self, threshold=None):
         # Print warnings and errors on the status of the RAM
         mc_monitor = MachineMonitor()
         machine_stats = mc_monitor.get_machine_info()
-        threshold = 1024*1024*500 #500 Mb
-        memory_warning = memory_warning_generator(machine_stats['virtual_memory'], threshold)
+        if threshold:
+            mem_threshold = threshold
+        else:
+            mem_threshold = 1024*1024*500 #500 MB
+        memory_warning = memory_warning_generator(machine_stats['virtual_memory'], mem_threshold)
         if memory_warning:
             print("Warning. Only 500 MB of memory left")
         else:
             print("Memory health is fine")
 
-    def get_disk_health(self):
+    def get_disk_health(self, threshold=None):
         # Print warnings and errors on the status of the disk
         mc_monitor = MachineMonitor()
         machine_stats = mc_monitor.get_machine_info()
-        threshold = 1024*1024*1024 #1 Gb
-        disk_warning = disk_warning_generator(machine_stats['disk_usage']['/'], threshold)
+        if threshold:
+            mem_threshold = threshold
+        else:
+            mem_threshold = 1024*1024*1024 #1 GB
+        disk_warning = disk_warning_generator(machine_stats['disk_usage']['/'], mem_threshold)
         if disk_warning:
             print("Warning. Over 80 percent of disk used")
         else:
@@ -70,17 +76,25 @@ class Sauron(object):
         except FileNotFoundError:
             print("Error! Please provide correct file path to config file")
 
-    def get_process_cpu_health(self):
+    def get_process_cpu_health(self, threshold=None):
         process_monitor = ProcessMonitor('node')
         process_stats = process_monitor.get_process_info()
+        if threshold:
+            cpu_threshold = threshold
+        else:
+            cpu_threshold = 1
         cpu_percent = process_stats['cpu_percent']
-        process_cpu_percent_generator(cpu_percent, 1)
+        process_cpu_percent_generator(cpu_percent, cpu_threshold)
 
-    def get_process_memory_health(self):
+    def get_process_memory_health(self, threshold=None):
         process_monitor = ProcessMonitor('node')
         process_stats = process_monitor.get_process_info()
+        if threshold:
+            process_threshold = threshold
+        else:
+            process_threshold = 1
         memory_percent = process_stats['memory_percent']
-        process_memory_percent_generator(memory_percent, 1)
+        process_memory_percent_generator(memory_percent, process_threshold)
 
 if __name__ == "__main__":
     sauron = Sauron()
