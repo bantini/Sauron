@@ -33,4 +33,11 @@ The format of the config file is as follows:
 ```
 [{"endpoint":"http://www.test.com/", "method": "GET"}, {"endpoint":"http://www.nilayan.com", "method": "GET"}]
 ```
-
+To get the application CPU health, the user has to provide the percentage of the CPU that the application can use. The default is 1.
+```
+get_process_cpu_health(threshold)
+```
+To get the application memory health, the user has to provide the percentage of the memory that the application can use. The default is 1.
+```
+get_process_memory_health(threshold)
+```
