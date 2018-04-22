@@ -7,11 +7,10 @@ setup(name='Sauron',
       author='Nilayan B (bantini)',
       author_email='nilayan.nbinc@gmail.com',
       license='Apache Commons 2.0',
-      packages=['sauron'],
+      packages=['sauron', 'sauron/machine_monitor', 'sauron/ping_monitor',
+                'sauron/process_monitor'],
       install_requires=[
           'psutil',
-          'requests',
-          'json',
-          'subprocess'
-      ],
+          'requests'
+          ],
       zip_safe=False)

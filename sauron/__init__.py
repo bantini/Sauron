@@ -14,7 +14,7 @@ class Sauron(object):
     def get_server_stats(self):
         mc_monitor = MachineMonitor()
         machine_stats = mc_monitor.get_machine_info()
-        pg_monitor = PingMonitor('/Users/nilayan/Documents/Sauron/config/config.json')
+        pg_monitor = PingMonitor('/Users/nilayan/Documents/Sauron/sauron/config/config.json')
         ping_stats = pg_monitor.get_ping_info()
         pc_monitor = ProcessMonitor('node')
         process_stats = pc_monitor.get_process_info()
