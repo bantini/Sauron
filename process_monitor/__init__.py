@@ -19,13 +19,14 @@ class ProcessMonitor(object):
 
     def get_process_info(self):
         process_info = {}
-        print(self._cpu_times[0])
-        print(self._cpu_percent)
-        print(self._memory_info)
-        print(self._memory_full_info )
-        print(self._memory_percent)
-        print(self._open_files)
-        print(self._connections)
+        process_info['cpu_times'] = self._cpu_times
+        process_info['cpu_percent'] = self._cpu_percent
+        process_info['memory_info'] = self._memory_info
+        process_info['memory_full_info'] = self._memory_full_info
+        process_info['memory_percent'] = self._memory_percent
+        process_info['open_files'] = self._open_files
+        process_info['connections'] = self._connections
+        return process_info
 
 
 
@@ -37,4 +38,5 @@ def get_pid(name):
 
 if __name__ == "__main__":
     monitor = ProcessMonitor('node')
-    monitor.get_process_info()
+    process_infos = monitor.get_process_info()
+    print(process_infos['cpu_times'][0])
