@@ -1,7 +1,7 @@
 """
 Module to monitor the API health
 """
-from ping_monitor.api_config_reader import ApiConfigReader
+from sauron.ping_monitor.api_config_reader import ApiConfigReader
 import requests
 
 class PingMonitor(object):

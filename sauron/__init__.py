@@ -1,8 +1,9 @@
-from machine_monitor import MachineMonitor
-from ping_monitor import PingMonitor
-from process_monitor import ProcessMonitor
 
-from stat_aggregator import machine_stat_aggregator, ping_stat_aggregator, process_stat_aggregator
+from sauron.machine_monitor import MachineMonitor
+from sauron.ping_monitor import PingMonitor
+from sauron.process_monitor import ProcessMonitor
+
+from sauron.stat_aggregator import machine_stat_aggregator, ping_stat_aggregator, process_stat_aggregator
 # import ping_monitor
 # import process_monitor
 
@@ -12,6 +13,7 @@ class Sauron(object):
         pass
 
     def get_server_stats(self):
+        # Get all the stats and aggregate it
         mc_monitor = MachineMonitor()
         machine_stats = mc_monitor.get_machine_info()
         pg_monitor = PingMonitor('/Users/nilayan/Documents/Sauron/sauron/config/config.json')

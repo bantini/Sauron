@@ -2,7 +2,7 @@
 Read the config file to find the APIs
 """
 import json
-from ping_monitor.default_config_reader import DefaultConfigReader
+from sauron.ping_monitor.default_config_reader import DefaultConfigReader
 
 class ApiConfigReader(object):
 
