@@ -45,7 +45,7 @@ def make_api_call(endpoint):
     return response_output
 
 if __name__ == "__main__":
-    monitor = PingMonitor()
+    monitor = PingMonitor('/Users/nilayan/Documents/Sauron/sauron/config/config.json')
     statuses = monitor.get_ping_info()
     print(statuses[0]['endpoint'])
     print(statuses[0]['response_time'])

@@ -13,4 +13,5 @@ setup(name='Sauron',
           'psutil',
           'requests'
           ],
+      python_requires=">=3.5",
       zip_safe=False)

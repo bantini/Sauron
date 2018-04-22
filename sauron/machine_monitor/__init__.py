@@ -70,7 +70,7 @@ class MachineMonitor(object):
         machine_stats['swap_memory'] = self._swap_memory
         disk_usage = {}
         for partitions in self._disk_partitions:
-            disk_usage[partitions[0]] = self.get_disk_usage(partitions[0])
+            disk_usage[partitions[1]] = self.get_disk_usage(partitions[0])
         machine_stats['disk_usage'] = disk_usage
         return machine_stats
 

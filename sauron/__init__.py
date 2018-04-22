@@ -4,8 +4,7 @@ from sauron.ping_monitor import PingMonitor
 from sauron.process_monitor import ProcessMonitor
 
 from sauron.stat_aggregator import machine_stat_aggregator, ping_stat_aggregator, process_stat_aggregator
-# import ping_monitor
-# import process_monitor
+from sauron.machine_warning_generator import *
 
 class Sauron(object):
 
@@ -24,6 +23,33 @@ class Sauron(object):
                         ping_stat_aggregator(ping_stats),
                         process_stat_aggregator(process_stats))
         return server_stats
+
+    def get_cpu_health(self):
+        mc_monitor = MachineMonitor()
+        machine_stats = mc_monitor.get_machine_info()
+        cpu_warning = cpu_warning_generator(machine_stats['cpu_times'])
+        if cpu_warning:
+            print("Warning. CPU usage of system is exceeding idle time")
+        else:
+            print("CPU health is fine")
+
+    def get_memory_health(self):
+        mc_monitor = MachineMonitor()
+        machine_stats = mc_monitor.get_machine_info()
+        memory_warning = memory_warning_generator(machine_stats['virtual_memory'])
+        if memory_warning:
+            print("Warning. Only 500 MB of memory left")
+        else:
+            print("Memory health is fine")
+
+    def get_disk_health(self):
+        mc_monitor = MachineMonitor()
+        machine_stats = mc_monitor.get_machine_info()
+        disk_warning = disk_warning_generator(machine_stats['disk_usage']['/'])
+        if disk_warning:
+            print("Warning. Over 80 percent of disk used")
+        else:
+            print("Disk health is fine")
 
 if __name__ == "__main__":
     sauron = Sauron()
