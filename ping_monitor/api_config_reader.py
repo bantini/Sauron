@@ -2,7 +2,7 @@
 Read the config file to find the APIs
 """
 import json
-from default_config_reader import DefaultConfigReader
+from ping_monitor.default_config_reader import DefaultConfigReader
 
 class ApiConfigReader(object):
 
@@ -25,6 +25,6 @@ class ApiConfigReader(object):
         return endpoints
 
 if __name__ == "__main__":
-    config_reader = ApiConfigReader('../config/config.json')
+    config_reader = ApiConfigReader('/Users/nilayan/Documents/Sauron/config/config.json')
     endpoint_list = config_reader.get_default_list_apis()
     print(endpoint_list)

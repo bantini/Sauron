@@ -1,13 +1,13 @@
 """
 Module to monitor the API health
 """
-from api_config_reader import ApiConfigReader
+from ping_monitor.api_config_reader import ApiConfigReader
 import requests
 
 class PingMonitor(object):
 
-    def __init__(self):
-        apiconfig = ApiConfigReader('../config/config.json')
+    def __init__(self, config_path):
+        apiconfig = ApiConfigReader(config_path)
         endpoints = apiconfig.get_default_list_apis()
         self._endpoints_status = []
         for endpoint in endpoints:
@@ -23,7 +23,7 @@ class PingMonitor(object):
     def endpoints_status(self, value):
         self._endpoints_status = value
 
-    def get_endpoint_statuses(self):
+    def get_ping_info(self):
         'Get the list of statuses'
         return self._endpoints_status
 
@@ -45,8 +45,8 @@ def make_api_call(endpoint):
     return response_output
 
 if __name__ == "__main__":
-    monitor = ProcessMonitor()
-    statuses = monitor.get_endpoint_statuses()
+    monitor = PingMonitor()
+    statuses = monitor.get_ping_info()
     print(statuses[0]['endpoint'])
     print(statuses[0]['response_time'])
     print(statuses[0]['status'])

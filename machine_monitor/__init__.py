@@ -58,8 +58,23 @@ class MachineMonitor(object):
     def disk_usage(self, value):
         self._disk_usage = value
 
+    def get_disk_usage(self, partition):
+        # Get the disk usage of a particular partition
+        return psutil.disk_usage(partition)
+
+    def get_machine_info(self):
+        # Get the statistics associated with a machine
+        machine_stats = {}
+        machine_stats['cpu_times'] = self._cpu_times
+        machine_stats['virtual_memory'] = self._virtual_memory
+        machine_stats['swap_memory'] = self._swap_memory
+        disk_usage = {}
+        for partitions in self._disk_partitions:
+            disk_usage[partitions[0]] = self.get_disk_usage(partitions[0])
+        machine_stats['disk_usage'] = disk_usage
+        return machine_stats
 
 if __name__ == "__main__":
     machine_monitor = MachineMonitor()
-    cpu_times = machine_monitor.cpu_times
-    print(cpu_times)
+    out = machine_monitor.get_machine_info()
+    print(out)
