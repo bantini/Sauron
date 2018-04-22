@@ -1,4 +1,4 @@
-
+"""Generate warnings for Machine statistics"""
 def cpu_warning_generator(cpu_tuple):
     # Returns boolean value false if used cycles is greater than idle cycles
     used_time = cpu_tuple.user + cpu_tuple.nice + cpu_tuple.system
@@ -7,7 +7,7 @@ def cpu_warning_generator(cpu_tuple):
     else:
         return False
 
-def memory_warning_generator(memory_tuple):
+def memory_warning_generator(memory_tuple, threshold):
     # Returns boolean value false if memory is less than 500 MB
     THRESHOLD = 1024*1024*500
     if memory_tuple.available <= THRESHOLD:
@@ -15,7 +15,7 @@ def memory_warning_generator(memory_tuple):
     else:
         return False
 
-def disk_warning_generator(disk_tuple):
+def disk_warning_generator(disk_tuple, threshold):
     # Returns boolean value false if disk space is less than 1 GB
     if disk_tuple.percent > 80:
         return True

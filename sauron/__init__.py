@@ -6,6 +6,7 @@ from sauron.process_monitor import ProcessMonitor
 from sauron.stat_aggregator import machine_stat_aggregator, ping_stat_aggregator, process_stat_aggregator
 from sauron.machine_warning_generator import *
 from sauron.ping_warning_generator import *
+from sauron.process_warning_generator import *
 
 class Sauron(object):
 
@@ -39,7 +40,8 @@ class Sauron(object):
         # Print warnings and errors on the status of the RAM
         mc_monitor = MachineMonitor()
         machine_stats = mc_monitor.get_machine_info()
-        memory_warning = memory_warning_generator(machine_stats['virtual_memory'])
+        threshold = 1024*1024*500 #500 Mb
+        memory_warning = memory_warning_generator(machine_stats['virtual_memory'], threshold)
         if memory_warning:
             print("Warning. Only 500 MB of memory left")
         else:
@@ -49,7 +51,8 @@ class Sauron(object):
         # Print warnings and errors on the status of the disk
         mc_monitor = MachineMonitor()
         machine_stats = mc_monitor.get_machine_info()
-        disk_warning = disk_warning_generator(machine_stats['disk_usage']['/'])
+        threshold = 1024*1024*1024 #1 Gb
+        disk_warning = disk_warning_generator(machine_stats['disk_usage']['/'], threshold)
         if disk_warning:
             print("Warning. Over 80 percent of disk used")
         else:
@@ -67,6 +70,17 @@ class Sauron(object):
         except FileNotFoundError:
             print("Error! Please provide correct file path to config file")
 
+    def get_process_cpu_health(self):
+        process_monitor = ProcessMonitor('node')
+        process_stats = process_monitor.get_process_info()
+        cpu_percent = process_stats['cpu_percent']
+        process_cpu_percent_generator(cpu_percent, 1)
+
+    def get_process_memory_health(self):
+        process_monitor = ProcessMonitor('node')
+        process_stats = process_monitor.get_process_info()
+        memory_percent = process_stats['memory_percent']
+        process_memory_percent_generator(memory_percent, 1)
 
 if __name__ == "__main__":
     sauron = Sauron()
