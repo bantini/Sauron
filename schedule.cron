@@ -3,6 +3,8 @@
 # Assuming Python 3.6 is default
 # Currently scheduled to run every minute
 # To schedule every hour instead, uncomment the line below
-# and set the path to sample.py
+# and set the path to sample.py:-
 # 0 * * * *  python /path/to/sample.py
+# To schedule via shell uncomment below:-
+# * * * * * sh /path/to/sauron.sh
 * * * * * python /path/to/sample.py
