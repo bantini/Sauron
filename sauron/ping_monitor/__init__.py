@@ -41,8 +41,15 @@ def make_api_call(endpoint):
                 response_output['response_time'] = r.elapsed.total_seconds()
                 response_output['status'] = False
         else:
-            # TODO: Implement for other HTTP methods
-            pass
+            r = requests.get(endpoint['endpoint'])
+            if r.status_code == 405 or r.status_code == 200:
+                response_output['endpoint'] = endpoint['endpoint']
+                response_output['response_time'] = r.elapsed.total_seconds()
+                response_output['status'] = True
+            else:
+                response_output['endpoint'] = endpoint['endpoint']
+                response_output['response_time'] = r.elapsed.total_seconds()
+                response_output['status'] = False
     except requests.exceptions.ConnectionError:
         response_output['endpoint'] = endpoint['endpoint']
         response_output['response_time'] = 99999
@@ -52,6 +59,4 @@ def make_api_call(endpoint):
 if __name__ == "__main__":
     monitor = PingMonitor('/Users/nilayan/Documents/Sauron/sauron/config/config.json')
     statuses = monitor.get_ping_info()
-    print(statuses[0]['endpoint'])
-    print(statuses[0]['response_time'])
-    print(statuses[0]['status'])
+    print(statuses)

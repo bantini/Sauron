@@ -1,2 +1,4 @@
-[{"endpoint":"http://www.vahanalytics.com/", "method": "GET"},
-{"endpoint":"http://www.nilayan.com", "method": "GET"}]
+[{"endpoint":"http://www.nilayan.me/", "method": "GET"},
+{"endpoint":"http://www.nilayan.me/", "method": "POST"},
+{"endpoint":"http://www.nilayan.com", "method": "GET"},
+{"endpoint": "http://localhost:8080", "method": "GET"}]
