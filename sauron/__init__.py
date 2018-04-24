@@ -70,7 +70,7 @@ class Sauron(object):
             if config_path:
                 ping_monitor = PingMonitor(config_path)
             else:
-                ping_monitor = PingMonitor('Default/path/to/config')
+                ping_monitor = PingMonitor('./config/config.json')
             ping_stats = ping_monitor.get_ping_info()
             api_warning_generator(ping_stats)
         except FileNotFoundError:
