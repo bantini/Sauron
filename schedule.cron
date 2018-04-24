@@ -1,0 +1,8 @@
+# Set the path to the path of the sample.py
+# Run as root to access system info
+# Assuming Python 3.6 is default
+# Currently scheduled to run every minute
+# To schedule every hour instead, uncomment the line below
+# and set the path to sample.py
+# 0 * * * *  python /path/to/sample.py
+* * * * * python /path/to/sample.py
