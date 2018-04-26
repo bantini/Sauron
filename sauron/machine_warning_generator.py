@@ -7,17 +7,15 @@ def cpu_warning_generator(cpu_tuple):
     else:
         return False
 
-def memory_warning_generator(memory_tuple, threshold):
+def memory_warning_generator(memory_tuple, threshold=524288000):
     # Returns boolean value false if memory is less than 500 MB
-    THRESHOLD = 1024*1024*500
-    if memory_tuple.available <= THRESHOLD:
+    if memory_tuple.available <= threshold:
         return True
-    else:
-        return False
+    return False
 
-def disk_warning_generator(disk_tuple, threshold):
+def disk_warning_generator(disk_tuple, threshold = 80):
     # Returns boolean value false if disk space is less than 1 GB
-    if disk_tuple.percent > 80:
+    if disk_tuple.percent > threshold:
         return True
     else:
         return False
