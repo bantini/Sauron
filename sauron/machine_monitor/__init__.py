@@ -20,7 +20,7 @@ class MachineMonitor(object):
         self._virtual_memory = psutil.virtual_memory()
         self._swap_memory = psutil.swap_memory()
         self._disk_partitions = psutil.disk_partitions()
-        self._disk_usage = psutil.disk_usage('/')
+        self._disk_usage = psutil.disk_usage('/') # Used, free
         self._net_io_counters = psutil.net_io_counters(pernic=True)
 
     @property

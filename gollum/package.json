@@ -1,0 +1,14 @@
+{
+  "name": "gollum",
+  "version": "0.0.1",
+  "description": "A node library to integrate with an existing express server to get the status of the endpoints.",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "author": "nb sd ss",
+  "license": "ISC",
+  "dependencies": {
+    "on-finished": "latest"
+  }
+}

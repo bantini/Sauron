@@ -73,7 +73,7 @@ class Sauron(object):
                 ping_monitor = PingMonitor('./config/config.json')
             ping_stats = ping_monitor.get_ping_info()
             api_warning_generator(ping_stats)
-        except FileNotFoundError:
+        except IOError:
             print("Error! Please provide correct file path to config file")
 
     def get_process_cpu_health(self, threshold=None):
